@@ -1,0 +1,1243 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Zehra Dilşen - Kişisel Blog & Teknik Portföy</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root{
+          --bg:#0e0f12;
+          --bg-elev:#15171c;
+          --text:#e8e9eb;
+          --muted:#a7adba;
+          --primary:#6e7cff;
+          --primary-700:#5967df;
+          --card:#121318;
+          --border:#262a33;
+          --shadow:0 10px 30px rgba(0,0,0,.35);
+          --accent:#e74c3c;
+        }
+
+        *{box-sizing:border-box}
+        html,body{margin:0;padding:0}
+        html{scroll-behavior:smooth}
+        body{
+          font-family:'Inter',system-ui,-apple-system,Segoe UI,Roboto,Arial,sans-serif;
+          background:linear-gradient(180deg,#0b0c0f 0%, #0e0f12 30%, #0e0f12 100%);
+          color:var(--text);
+          line-height:1.6;
+          min-height:100vh;
+        }
+
+        .container{width:100%;max-width:1100px;margin:0 auto;padding:0 16px}
+
+        /* Header / Nav */
+        .site-header{
+            position:sticky;
+            top:0;
+            z-index:50;
+            background:rgba(14,15,18,.85);
+            backdrop-filter:saturate(140%) blur(12px);
+            border-bottom:1px solid var(--border)
+        }
+        .header-inner{display:flex;align-items:center;justify-content:space-between;min-height:60px}
+        .brand{
+            font-weight:700;
+            color:var(--text);
+            text-decoration:none;
+            letter-spacing:.2px;
+            font-size:1.1rem;
+        }
+        .nav-toggle{display:none;background:none;border:1px solid var(--border);color:var(--text);padding:6px 10px;border-radius:6px;cursor:pointer}
+        .nav-list{list-style:none;display:flex;gap:14px;margin:0;padding:0}
+        .nav-list a{color:var(--muted);text-decoration:none;padding:8px 12px;border-radius:8px;font-weight:500;transition:.2s}
+        .nav-list a:hover{color:var(--text);background:var(--bg-elev)}
+        .nav-externals{margin-left:8px}
+
+        /* Hero */
+        .hero{padding:80px 0 60px;text-align:center}
+        .hero-content{max-width:760px;margin:0 auto}
+        .hero h1{margin:0 0 12px;font-weight:700;letter-spacing:.2px;font-size:3rem;background:linear-gradient(135deg, var(--text) 0%, var(--muted) 100%);background-clip:text;-webkit-background-clip:text;-webkit-text-fill-color:transparent}
+        .hero .subtitle{margin:0 0 8px;color:var(--primary);font-weight:600;font-size:1.1rem}
+        .hero .quote{margin:20px 0 0;color:var(--muted);font-style:italic;opacity:.8}
+
+        /* Sections */
+        .section{padding:60px 0}
+        .section h2{color:var(--text);margin-bottom:8px;font-weight:700;font-size:2.2rem}
+        .section-header p{color:var(--muted);margin-top:-4px;margin-bottom:32px}
+
+        /* About */
+        .about-grid{display:grid;grid-template-columns:1.1fr 1.4fr;gap:32px;margin-top:24px}
+        .about-text p{margin-bottom:18px;color:var(--muted)}
+        .pill-list{display:flex;flex-wrap:wrap;gap:8px;padding:0;margin:16px 0;list-style:none}
+        .pill-list li{border:1px solid var(--border);background:var(--bg-elev);padding:8px 14px;border-radius:999px;color:var(--muted);font-size:.9rem}
+
+        /* Cards */
+        .card-grid{display:grid;grid-template-columns:repeat(auto-fit, minmax(300px, 1fr));gap:20px;margin-top:24px}
+        .card{
+            background:var(--card);
+            border:1px solid var(--border);
+            border-radius:14px;
+            overflow:hidden;
+            box-shadow:var(--shadow);
+            transition:all .3s ease;
+            cursor:pointer;
+        }
+        .card:hover{transform:translateY(-6px);box-shadow:0 16px 40px rgba(0,0,0,.5)}
+        .card img{display:block;width:100%;height:180px;object-fit:cover;filter:saturate(90%) contrast(95%)}
+        .card-body{padding:20px}
+        .card-body h4{margin:0 0 8px;color:var(--text);font-weight:600}
+        .card-body p{margin:0 0 12px;color:var(--muted);line-height:1.5}
+        .card-body .author{display:flex;align-items:center;gap:10px;margin-top:12px}
+        .card-body .author img{width:32px;height:32px;border-radius:50%;object-fit:cover}
+        .card-body .author img.hidden-photo{background:var(--card);border:1px solid var(--border);opacity:0}
+        .card-body .author-name{font-weight:600;color:var(--primary);font-size:.9rem}
+
+        /* Quote cards specific */
+        .quote-card{position:relative}
+        .quote-preview{font-style:italic;color:var(--text);margin-bottom:16px}
+        .category-tag{
+            position:absolute;
+            top:12px;
+            right:12px;
+            background:var(--primary);
+            color:white;
+            padding:4px 8px;
+            border-radius:12px;
+            font-size:.7rem;
+            font-weight:600;
+        }
+
+        /* Learning section */
+        .learning-card{
+            background:var(--card);
+            border:1px solid var(--border);
+            border-radius:14px;
+            padding:24px;
+            box-shadow:var(--shadow);
+            transition:transform .2s;
+        }
+        .learning-card:hover{transform:translateY(-2px)}
+        .learning-card h4{color:var(--primary);margin:0 0 12px;font-weight:600}
+        .learning-card p{color:var(--muted);margin:0}
+
+        /* Video section */
+        .video-section{margin-top:48px}
+        .video-wrapper{
+            position:relative;
+            padding-bottom:56.25%;
+            height:0;
+            overflow:hidden;
+            border-radius:12px;
+            border:1px solid var(--border);
+            background:#000;
+            margin-top:16px;
+        }
+        .video-wrapper iframe{position:absolute;inset:0;width:100%;height:100%}
+
+        /* Contact */
+        .contact-grid{display:grid;grid-template-columns:repeat(auto-fit, minmax(250px, 1fr));gap:20px;margin-top:24px}
+        .contact-card{
+            background:var(--card);
+            border:1px solid var(--border);
+            border-radius:12px;
+            padding:24px;
+            text-align:center;
+            transition:transform .2s;
+        }
+        .contact-card:hover{transform:translateY(-2px)}
+        .contact-card h4{color:var(--primary);margin:0 0 8px}
+        .contact-card a{color:var(--text);text-decoration:none}
+        .contact-card a:hover{color:var(--primary)}
+
+        /* Footer */
+        .site-footer{
+            border-top:1px solid var(--border);
+            margin-top:60px;
+            padding:32px 0;
+            color:var(--muted);
+            background:var(--bg-elev);
+            text-align:center;
+        }
+
+        /* Modals */
+        .modal-overlay{
+            position:fixed;
+            inset:0;
+            background:rgba(0,0,0,.8);
+            backdrop-filter:blur(4px);
+            display:none;
+            z-index:1000;
+        }
+        .modal{
+            position:fixed;
+            inset:0;
+            display:none;
+            place-items:center;
+            padding:20px;
+            z-index:1001;
+        }
+        .modal-content{
+            width:min(800px, 95%);
+            max-height:85vh;
+            overflow:auto;
+            background:var(--card);
+            border:1px solid var(--border);
+            border-radius:16px;
+            box-shadow:0 20px 60px rgba(0,0,0,.6);
+            padding:24px;
+        }
+        .modal-close{
+            float:right;
+            background:transparent;
+            border:1px solid var(--border);
+            color:var(--muted);
+            border-radius:8px;
+            padding:6px 12px;
+            cursor:pointer;
+            transition:.2s;
+        }
+        .modal-close:hover{color:var(--text);background:var(--bg-elev)}
+        .modal h3{color:var(--text);margin:0 0 16px;font-weight:700}
+        .quote-figure{margin:16px 0}
+        .quote-figure img{width:100%;height:240px;object-fit:cover;border-radius:12px;border:1px solid var(--border)}
+        .quote-text{
+            margin:20px 0;
+            padding:20px;
+            background:var(--bg-elev);
+            border-left:4px solid var(--primary);
+            color:var(--text);
+            border-radius:8px;
+            font-style:italic;
+            line-height:1.7;
+        }
+        .quote-info{
+            background:var(--bg-elev);
+            border:1px solid var(--border);
+            border-radius:10px;
+            padding:16px;
+            margin:16px 0;
+        }
+        .quote-info h4{color:var(--primary);margin:0 0 8px}
+        .quote-info p{color:var(--muted);margin:0;font-size:.9rem}
+
+        /* Responsive */
+        @media (max-width: 900px){
+          .about-grid{grid-template-columns:1fr}
+          .card-grid{grid-template-columns:repeat(auto-fit, minmax(280px, 1fr))}
+        }
+        @media (max-width: 640px){
+          .nav-toggle{display:inline-block}
+          .nav-list{
+              display:none;
+              position:absolute;
+              right:16px;
+              top:60px;
+              background:var(--bg-elev);
+              border:1px solid var(--border);
+              border-radius:10px;
+              padding:10px;
+              flex-direction:column;
+              gap:6px;
+              min-width:200px;
+          }
+          .nav-list.show{display:flex}
+          .hero h1{font-size:2.2rem}
+          .card-grid{grid-template-columns:1fr}
+          .modal-content{padding:16px;width:95%}
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header class="site-header">
+        <div class="container">
+            <div class="header-inner">
+                <a href="#" class="brand">Zehra Dilşen</a>
+                <button class="nav-toggle" aria-expanded="false">☰</button>
+                <nav>
+                    <ul class="nav-list" id="primary-menu">
+                        <li><a href="#anasayfa">Ana Sayfa</a></li>
+                        <li><a href="#hakkimda">Proje Hakkında</a></li>
+                        <li><a href="#ogrenme">Öğrenme Sürecim</a></li>
+                        <li><a href="#sozler">Sevdiğim Sözler</a></li>
+                        <li><a href="#iletisim">İletişim</a></li>
+                        <li><a href="https://github.com/zehrara" target="_blank">GitHub</a></li>
+                    </ul>
+                </nav>
+            </div>
+        </div>
+    </header>
+
+    <!-- Hero -->
+    <section id="anasayfa" class="hero">
+        <div class="container">
+            <div class="hero-content">
+                <div class="subtitle">Bilgisayar Mühendisliği Öğrencisi</div>
+                <h1>Zehra Dilşen</h1>
+            </div>
+        </div>
+    </section>
+
+    <!-- About -->
+    <section id="hakkimda" class="section">
+        <div class="container">
+            <div class="section-header">
+                <h2>Hakkımda</h2>
+            </div>
+            
+            <div class="about-grid">
+                <div class="about-text">
+                    <p>Merhaba! Ben Zehra, Süleyman Demirel Üniversitesi Bilgisayar Mühendisliği 3. sınıf öğrencisiyim. Son yıllarda hayatla bağım biraz zayıfladı, çoğu zaman sadece günlerin geçmesini bekliyorum.</p>
+                    
+                    <p>Eskiden film izlemeyi ve müzik dinlemeyi çok severdim. Özellikle Hayao Miyazaki'nin filmleri beni büyülüyor - bu filmlerde gördüğüm saf ve gerçek sevgiyi, gerçek hayatta asla sahip olamayacağımı bilsem de.</p>
+                    
+                    
+                    <p>Bilgisayar mühendisliği alanında C, C#, Java gibi programlama dilleri öğrendim. Object Oriented Programming konularında kendimi geliştirmeye çalışıyorum. Bu web sitesi de HTML, CSS ve JavaScript kullanarak yaptığım küçük bir proje.</p>
+                </div>
+                
+                <div class="about-skills">
+                    <h4 style="color: var(--primary); margin-bottom: 12px;">Programlama Dilleri</h4>
+                    <ul class="pill-list">
+                        <li>C</li>
+                        <li>C#</li>
+                        <li>Java</li>
+                        <li>HTML/CSS/JavaScript</li>
+                        <li>Object Oriented Programming</li>
+                    </ul>
+                    
+                    <h4 style="color: var(--primary); margin-bottom: 12px;">İlgi Alanlarım</h4>
+                    <ul class="pill-list">
+                        <li>Miyazaki Filmleri</li>
+                        <li>Fantastik Edebiyat</li>
+                        <li>Rock Müzik</li>
+                        <li>Felsefi Düşünceler</li>
+                        <li>Yüzüklerin Efendisi</li>
+                        <li>Web Geliştirme</li>
+                    </ul>
+                    
+                    <h4 style="color: var(--primary); margin-bottom: 12px;">Şu Anki Durum</h4>
+                    <p style="color: var(--muted);">Hayatla bağım zayıf, çoğu zaman sadece bekliyorum. Ama güzel şeyler hala içimi açıyor ve bu sitede onları paylaşmak istedim. Aynı zamanda bilgisayar mühendisliği alanındaki öğrendiklerimi de burada sergiliyorum.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Learning -->
+    <section id="ogrenme" class="section">
+        <div class="container">
+            <div class="section-header">
+                <h2>Öğrenme Sürecim</h2>
+                <p>Üniversitede öğrendiklerim ve küçük denemelerim</p>
+            </div>
+            
+            <div class="card-grid">
+                <div class="learning-card">
+                    <h4>Bu Web Sitesi</h4>
+                    <p>HTML, CSS ve JavaScript kullanarak kişisel web sitemi oluşturdum. Modern tasarım ve responsive yapı ekledim. Modal sistem ile interaktif özellikler geliştirdim.</p>
+                </div>
+                <div class="learning-card">
+                    <h4>Üniversite Dersleri</h4>
+                    <p>C dili ile temel programlama, C# ve Java ile Object Oriented Programming konularını öğrendim. Veri yapıları ve algoritmalar üzerine çalışmalar yaptım.</p>
+                </div>
+                <div class="learning-card">
+                    <h4>Küçük Denemeler</h4>
+                    <p>Zaman zaman basit konsol uygulamaları yazmaya çalışıyorum. Hesap makinesi, oyunlar ve küçük veritabanı uygulamaları gibi projeler yapıyorum.</p>
+                </div>
+            </div>
+
+            <!-- Video Section -->
+            <div class="video-section">
+                <h3 style="color: var(--primary); margin-bottom: 8px;">True Detective - Rust Cohle Monologu</h3>
+                <p style="color: var(--muted); margin-bottom: 16px;">Rust Cohle'un insan bilinci hakkındaki derin düşünceleri beni çok etkiliyor.</p>
+                <div class="video-wrapper">
+                    <iframe src="https://www.youtube.com/embed/Yhi6y1XWb-E" 
+                            frameborder="0" 
+                            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
+                            allowfullscreen>
+                    </iframe>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Quotes -->
+    <section id="sozler" class="section">
+        <div class="container">
+            <div class="section-header">
+                <h2>Sevdiğim Sözler</h2>
+                <p>Beni etkileyen ve düşündüren alıntılar</p>
+            </div>
+            
+            <div class="card-grid">
+                <!-- Bukowski Blue Bird -->
+                <div class="card quote-card" data-modal-target="#modal-bluebird">
+                    <div class="category-tag">Şiir</div>
+                    <div class="card-body">
+                        <div class="quote-preview">"there's a bluebird in my heart that wants to get out..."</div>
+                        <div class="author">
+                            <img src="https://upload.wikimedia.org/wikipedia/commons/8/8b/Charles_Bukowski_smoking.jpg" alt="Charles Bukowski" class="hidden-photo">
+                            <div>
+                                <div class="author-name">Charles Bukowski</div>
+                                <small style="color: var(--muted);">Blue Bird</small>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Bukowski Genius of Crowd -->
+                <div class="card quote-card" data-modal-target="#modal-genius">
+                    <div class="category-tag">Şiir</div>
+                    <div class="card-body">
+                        <div class="quote-preview">"there is enough treachery, hatred violence absurdity in the average human being..."</div>
+                        <div class="author">
+                            <img src="https://upload.wikimedia.org/wikipedia/commons/8/8b/Charles_Bukowski_smoking.jpg" alt="Charles Bukowski" class="hidden-photo">
+                            <div>
+                                <div class="author-name">Charles Bukowski</div>
+                                <small style="color: var(--muted);">The Genius of the Crowd</small>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Shakespeare Hamlet -->
+                <div class="card quote-card" data-modal-target="#modal-hamlet">
+                    <div class="category-tag">Tiyatro</div>
+                    <div class="card-body">
+                        <div class="quote-preview">"Olmak ya da olmamak, işte bütün mesele bu..."</div>
+                        <div class="author">
+                            <img src="https://upload.wikimedia.org/wikipedia/commons/a/a2/Shakespeare.jpg" alt="William Shakespeare">
+                            <div>
+                                <div class="author-name">William Shakespeare</div>
+                                <small style="color: var(--muted);">Hamlet</small>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- True Detective -->
+                <div class="card quote-card" data-modal-target="#modal-detective">
+                    <div class="category-tag">Sinema</div>
+                    <div class="card-body">
+                        <div class="quote-preview">"I think human consciousness is a tragic misstep in evolution..."</div>
+                        <div class="author">
+                            <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/3/3c/Matthew_McConaughey_2013.jpg/220px-Matthew_McConaughey_2013.jpg" alt="Rust Cohle - True Detective" class="hidden-photo">
+                            <div>
+                                <div class="author-name">Rust Cohle</div>
+                                <small style="color: var(--muted);">True Detective</small>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Camus -->
+                <div class="card quote-card" data-modal-target="#modal-camus1">
+                    <div class="category-tag">Felsefe</div>
+                    <div class="card-body">
+                        <div class="quote-preview">"Gerçekten ciddi olan tek felsefi problem vardır: intihar..."</div>
+                        <div class="author">
+                            <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/0/08/Albert_Camus%2C_gagnant_de_prix_Nobel%2C_portrait_en_buste%2C_pos%C3%A9_au_bureau%2C_faisant_face_%C3%A0_gauche.jpg/220px-Albert_Camus%2C_gagnant_de_prix_Nobel%2C_portrait_en_buste%2C_pos%C3%A9_au_bureau%2C_faisant_face_%C3%A0_gauche.jpg" alt="Albert Camus" class="hidden-photo">
+                            <div>
+                                <div class="author-name">Albert Camus</div>
+                                <small style="color: var(--muted);">Sisifos Söyleni</small>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Sylvia Plath -->
+                <div class="card quote-card" data-modal-target="#modal-plath">
+                    <div class="category-tag">Edebiyat</div>
+                    <div class="card-body">
+                        <div class="quote-preview">"Yaşamımın, öyküdeki yeşil incir ağacı gibi önümde dallanıp budaklandığını görüyordum..."</div>
+                        <div class="author">
+                            <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/c/cf/Sylvia_Plath_%28a%29.jpg/220px-Sylvia_Plath_%28a%29.jpg" alt="Sylvia Plath" class="hidden-photo">
+                            <div>
+                                <div class="author-name">Sylvia Plath</div>
+                                <small style="color: var(--muted);">Çan Fanusı</small>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Nietzsche -->
+                <div class="card quote-card" data-modal-target="#modal-nietzsche">
+                    <div class="category-tag">Felsefe</div>
+                    <div class="card-body">
+                        <div class="quote-preview">"Tanrı öldü ve onu biz öldürdük..."</div>
+                        <div class="author">
+                            <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/1/1b/Nietzsche187a.jpg/220px-Nietzsche187a.jpg" alt="Nietzsche">
+                            <div>
+                                <div class="author-name">Friedrich Nietzsche</div>
+                                <small style="color: var(--muted);">Neşeli Bilim</small>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Sartre -->
+                <div class="card quote-card" data-modal-target="#modal-sartre">
+                    <div class="category-tag">Felsefe</div>
+                    <div class="card-body">
+                        <div class="quote-preview">"Birdenbire varlığın ağırlığını hissettim..."</div>
+                        <div class="author">
+                            <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/e/ef/Sartre_1967_crop.jpg/220px-Sartre_1967_crop.jpg" alt="Sartre">
+                            <div>
+                                <div class="author-name">Jean-Paul Sartre</div>
+                                <small style="color: var(--muted);">Bulantı</small>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Ümit Yaşar Oğuzcan -->
+                <div class="card quote-card" data-modal-target="#modal-umit">
+                    <div class="category-tag">Şiir</div>
+                    <div class="card-body">
+                        <div class="quote-preview">"Her günü seninle tekrar tekrar yaşamak..."</div>
+                        <div class="author">
+                            <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/8/8a/%C3%9Cmit_Ya%C5%9Far_O%C4%9Fuzcan.jpg/220px-%C3%9Cmit_Ya%C5%9Far_O%C4%9Fuzcan.jpg" alt="Ümit Yaşar Oğuzcan" class="hidden-photo">
+                            <div>
+                                <div class="author-name">Ümit Yaşar Oğuzcan</div>
+                                <small style="color: var(--muted);">Her Gün Seninle</small>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Cyrano de Bergerac -->
+                <div class="card quote-card" data-modal-target="#modal-cyrano">
+                    <div class="category-tag">Tiyatro</div>
+                    <div class="card-body">
+                        <div class="quote-preview">"İstemem eksik olsun böyle bir şöhret..."</div>
+                        <div class="author">
+                            <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/5/5a/Edmond_Rostand.jpg/220px-Edmond_Rostand.jpg" alt="Edmond Rostand">
+                            <div>
+                                <div class="author-name">Edmond Rostand</div>
+                                <small style="color: var(--muted);">Cyrano de Bergerac</small>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Shakespeare Romeo ve Juliet -->
+                <div class="card quote-card" data-modal-target="#modal-romeo">
+                    <div class="category-tag">Tiyatro</div>
+                    <div class="card-body">
+                        <div class="quote-preview">"Yarayla alay eder, yaralanmamış olan..."</div>
+                        <div class="author">
+                            <img src="https://upload.wikimedia.org/wikipedia/commons/a/a2/Shakespeare.jpg" alt="William Shakespeare">
+                            <div>
+                                <div class="author-name">William Shakespeare</div>
+                                <small style="color: var(--muted);">Romeo ve Juliet</small>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Shakespeare As You Like It -->
+                <div class="card quote-card" data-modal-target="#modal-world">
+                    <div class="category-tag">Tiyatro</div>
+                    <div class="card-body">
+                        <div class="quote-preview">"Bütün dünya bir sahnedir..."</div>
+                        <div class="author">
+                            <img src="https://upload.wikimedia.org/wikipedia/commons/a/a2/Shakespeare.jpg" alt="William Shakespeare">
+                            <div>
+                                <div class="author-name">William Shakespeare</div>
+                                <small style="color: var(--muted);">As You Like It</small>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Anonim Şiir -->
+                <div class="card quote-card" data-modal-target="#modal-anonim">
+                    <div class="category-tag">Şiir</div>
+                    <div class="card-body">
+                        <div class="quote-preview">"Ağlamak için gözden yaş mı akmalı..."</div>
+                        <div class="author">
+                            <img src="https://via.placeholder.com/220x220/6e7cff/ffffff?text=?" alt="Anonim" class="hidden-photo">
+                            <div>
+                                <div class="author-name">Anonim</div>
+                                <small style="color: var(--muted);">İnternet Şiiri</small>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Contact -->
+    <section id="iletisim" class="section">
+        <div class="container">
+            <div class="section-header">
+                <h2>İletişim</h2>
+                <p>Benimle iletişime geçmek isterseniz</p>
+            </div>
+            
+            <div class="contact-grid">
+                <div class="contact-card">
+                    <h4>📧 E-posta</h4>
+                    <p><a href="mailto:zehradilsn@gmail.com">zehradilsn@gmail.com</a></p>
+                </div>
+                <div class="contact-card">
+                    <h4>💻 GitHub</h4>
+                    <p><a href="https://github.com/zehrara" target="_blank">github.com/zehrara</a></p>
+                </div>
+                <div class="contact-card">
+                    <h4>📍 Konum</h4>
+                    <p>Isparta, Türkiye</p>
+                    <small style="color: var(--muted); font-style: italic;">"Neden böyle korkunç derecede hüzünlü olmam gerek bilmiyorum..."</small>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="site-footer">
+        <div class="container">
+            <p>© 2024 Zehra Dilşen - Öğrenci No: 2221032614</p>
+        </div>
+    </footer>
+
+    <!-- Modal Overlay -->
+    <div class="modal-overlay" id="modal-overlay"></div>
+
+    <!-- Modals -->
+    <!-- Blue Bird Modal -->
+    <div class="modal" id="modal-bluebird">
+        <div class="modal-content">
+            <button class="modal-close" data-close="true">✕</button>
+            <h3>Blue Bird - Charles Bukowski</h3>
+            <div class="quote-info">
+                <h4>Şiir Bilgileri</h4>
+                <p><strong>Yazar:</strong> Charles Bukowski</p>
+                <p><strong>Kitap:</strong> The Last Night of the Earth Poems</p>
+                <p><strong>Yıl:</strong> 1992</p>
+            </div>
+            <div class="quote-text">
+                there's a bluebird in my heart that<br>
+                wants to get out<br>
+                but I'm too tough for him,<br>
+                I say, stay in there, I'm not going<br>
+                to let anybody see<br>
+                you.<br><br>
+                there's a bluebird in my heart that<br>
+                wants to get out<br>
+                but I pour whiskey on him and inhale<br>
+                cigarette smoke<br>
+                and the whores and the bartenders<br>
+                and the grocery clerks<br>
+                never know that<br>
+                he's<br>
+                in there.<br><br>
+                there's a bluebird in my heart that<br>
+                wants to get out<br>
+                but I'm too tough for him,<br>
+                I say,<br>
+                stay down, do you want to mess<br>
+                me up?<br>
+                you want to screw up the<br>
+                works?<br>
+                you want to blow my book sales in<br>
+                Europe?<br><br>
+                there's a bluebird in my heart that<br>
+                wants to get out<br>
+                but I'm too clever, I only let him out<br>
+                at night sometimes<br>
+                when everybody's asleep.<br>
+                I say, I know that you're there,<br>
+                so don't be<br>
+                sad.<br><br>
+                then I put him back,<br>
+                but he's singing a little<br>
+                in there, I haven't quite let him<br>
+                die<br>
+                and we sleep together like<br>
+                that<br>
+                with our<br>
+                secret pact<br>
+                and it's nice enough to<br>
+                make a man<br>
+                weep, but I don't<br>
+                weep, do<br>
+                you?
+            </div>
+        </div>
+    </div>
+
+    <!-- Hamlet Modal -->
+    <div class="modal" id="modal-hamlet">
+        <div class="modal-content">
+            <button class="modal-close" data-close="true">✕</button>
+            <h3>Hamlet - William Shakespeare</h3>
+            <div class="quote-info">
+                <h4>Oyun Bilgileri</h4>
+                <p><strong>Yazar:</strong> William Shakespeare</p>
+                <p><strong>Yazılış:</strong> 1600-1601</p>
+                <p><strong>Tür:</strong> Trajedi</p>
+            </div>
+            <div class="quote-text">
+                Olmak ya da olmamak, işte bütün mesele bu!<br>
+                Düşüncemizin katlanması mı güzel<br>
+                Zalim kaderin yumruklarına, oklarına<br>
+                Yoksa diretip bela denizlerine karşı<br>
+                Dur, yeter demesi mi?<br>
+                Ölmek, uyumak sadece!<br>
+                Düşünün ki uyumakla yalnız<br>
+                Bitebilir bütün acıları yüreğin,<br>
+                Çektiği bütün kahırlar insanoğlunun.<br>
+                Uyumak, ama düş görebilirsin uykuda, o kötü.<br>
+                Çünkü, o ölüm uykularında<br>
+                Sıyrıldığımız zaman yaşamak kaygısından<br>
+                Ne düşler görebilir insan, düşünmeli bunu.<br>
+                Bu düşüncedir felaketleri yaşanır yapan.<br>
+                Yoksa kim dayanabilir zamanın kırbacına?<br>
+                Zorbanın kahrına, gururunun çiğnenmesine<br>
+                Sevgisinin kepaze edilmesine<br>
+                Kanunların bu kadar yavaş<br>
+                Yüzsüzlüğün bu kadar çabuk yürümesine<br>
+                Kötülere kul olmasına iyi insanın<br>
+                Bir bıçak saplayıp göğsüne kurtulmak varken?<br>
+                Kim ister bütün bunlara katlanmak<br>
+                Ağır bir hayatın altında inleyip terlemek<br>
+                Ölümden sonraki bir şeyden korkmasa<br>
+                O kimsenin gidip de dönmediği bilinmez dünya<br>
+                Ürkütmese yüreğini?<br>
+                Bilmediğimiz belalara atılmaktansa<br>
+                Çektiklerine razı etmese insanları?<br>
+                Bilinç böyle korkak ediyor hepimizi:<br>
+                Düşüncenin soluk ışığı bulandırıyor<br>
+                Yürekten gelenin doğal rengini.<br>
+                Ve nice büyük, yiğitçe atılışlar<br>
+                Yollarını değiştirip bu yüzden<br>
+                Bir iş, bir eylem olma gücünü yitiriyorlar.
+            </div>
+        </div>
+    </div>
+
+    <!-- Bukowski Genius of Crowd Modal -->
+    <div class="modal" id="modal-genius">
+        <div class="modal-content">
+            <button class="modal-close" data-close="true">✕</button>
+            <h3>The Genius of the Crowd - Charles Bukowski</h3>
+            <div class="quote-info">
+                <h4>Şiir Bilgileri</h4>
+                <p><strong>Yazar:</strong> Charles Bukowski</p>
+                <p><strong>Kitap:</strong> The Last Night of the Earth Poems</p>
+                <p><strong>Yıl:</strong> 1992</p>
+            </div>
+            <div class="quote-text">
+                there is enough treachery, hatred violence absurdity in the average<br>
+                human being to supply any given army on any given day<br><br>
+                and the best at murder are those who preach against it<br>
+                and the best at hate are those who preach love<br>
+                and the best at war finally are those who preach peace<br><br>
+                those who preach god, need god<br>
+                those who preach peace do not have peace<br>
+                those who preach peace do not have love<br><br>
+                beware the preachers<br>
+                beware the knowers<br>
+                beware those who are always reading books<br>
+                beware those who either detest poverty<br>
+                or are proud of it<br>
+                beware those quick to praise<br>
+                for they need praise in return<br>
+                beware those who are quick to censor<br>
+                they are afraid of what they do not know<br>
+                beware those who seek constant crowds for<br>
+                they are nothing alone<br>
+                beware the average man the average woman<br>
+                beware their love, their love is average<br>
+                seeks average<br><br>
+                but there is genius in their hatred<br>
+                there is enough genius in their hatred to kill you<br>
+                to kill anybody<br>
+                not wanting solitude<br>
+                not understanding solitude<br>
+                they will attempt to destroy anything<br>
+                that differs from their own<br>
+                not being able to create art<br>
+                they will not understand art<br>
+                they will consider their failure as creators<br>
+                only as a failure of the world<br>
+                not being able to love fully<br>
+                they will believe your love incomplete<br>
+                and then they will hate you<br>
+                and their hatred will be perfect<br><br>
+                like a shining diamond<br>
+                like a knife<br>
+                like a mountain<br>
+                like a tiger<br>
+                like hemlock<br><br>
+                their finest art
+            </div>
+        </div>
+    </div>
+
+    <!-- True Detective Modal -->
+    <div class="modal" id="modal-detective">
+        <div class="modal-content">
+            <button class="modal-close" data-close="true">✕</button>
+            <h3>True Detective - Rust Cohle</h3>
+            <div class="quote-info">
+                <h4>Dizi Bilgileri</h4>
+                <p><strong>Dizi:</strong> True Detective</p>
+                <p><strong>Karakter:</strong> Rust Cohle (Matthew McConaughey)</p>
+                <p><strong>Yıl:</strong> 2014</p>
+            </div>
+            <div class="quote-text">
+                I think human consciousness is a tragic misstep in evolution. We became too self-aware. Nature created an aspect of nature separate from itself. We are creatures that should not exist by natural law. The honorable thing for our species to do is deny our programming. Stop reproducing. Walk hand in hand into extinction.
+            </div>
+        </div>
+    </div>
+
+    <!-- Ümit Yaşar Oğuzcan Modal -->
+    <div class="modal" id="modal-umit">
+        <div class="modal-content">
+            <button class="modal-close" data-close="true">✕</button>
+            <h3>Her Gün Seninle - Ümit Yaşar Oğuzcan</h3>
+            <div class="quote-info">
+                <h4>Şiir Bilgileri</h4>
+                <p><strong>Şair:</strong> Ümit Yaşar Oğuzcan</p>
+                <p><strong>Dönem:</strong> 20. Yüzyıl Türk Şiiri</p>
+                <p><strong>Tema:</strong> Aşk ve Özlem</p>
+            </div>
+            <div class="quote-text">
+                Güzel olan<br>
+                Her günü seninle tekrar tekrar yaşamak<br>
+                Erimek yarını olmayan zamanlarda<br>
+                Durdurmak bir yerde bütün saatleri<br>
+                Bütün kuralları kırıp parçalamak<br>
+                Sonra varmak o yerlere<br>
+                Mevsimlere dur demek<br>
+                Kar yağarken çiçek açtırmak ağaçlara<br>
+                Güneşi bir akşam saatinde tutup bırakmamak<br>
+                Sonra doldurmak ay ışığını kadehlere<br>
+                Delicesine içmek<br>
+                Ve unutabilmek her şeyi ansızın<br>
+                Sevmek seni en yücesiyle sevgilerin<br>
+                Birlikte geçmiş, gelecek bütün çağları aşmak<br>
+                Güzel olan<br>
+                Sevmek seni Tanrılar gibi<br>
+                Seninle Tanrılaşmak...<br><br>
+                Bir gün bu akan sele dur diyeceğim, göreceksin<br>
+                Ne bu şehir kalacak<br>
+                Ne bu duygusuz sürü<br>
+                Bu korkunç kalabalık<br>
+                Her vapur seni getirecek bana<br>
+                Bütün istasyonlarda seni bekleyeceğim<br>
+                Kapılar sana açılacak<br>
+                Senin için söylenecek şarkılar<br>
+                Şiirler senin için yazılacak<br>
+                Her evde bir resmin<br>
+                Her meydanda bir heykelin olacak<br>
+                Ve sen kimi gün bir rüzgar gibi<br>
+                Kimi gün denizler gibi, bulutlar gibi<br>
+                Kopup ötelerden, ötelerden<br>
+                Yalnız bana geleceksin<br>
+                Bir gün bu akan sele dur diyeceğim göreceksin.<br><br>
+                Ben eskimeyen tek güzelliği sende gördüm<br>
+                Sende buldum erişilmez hazları<br>
+                Yanında sıyrıldım korkulardan, yalanlardan<br>
+                Duyguların en ölmezini sende duydum<br>
+                Susuzluğum dudaklarında dindi<br>
+                Yalnızlığım ellerinde<br>
+                Çoğu gün unuttum açlığımı<br>
+                Sende doydum...<br><br>
+                İlk defa seninle bütünlendim, anlıyor musun<br>
+                Anladım yaşadığımı her nefes alışta<br>
+                Seninle geçtim bütün zamanlardan<br>
+                Seninle var oldum<br>
+                Eridim seninle bir sonsuz çalkanışta.<br><br>
+                Boynunda bir yer vardır, ben bilirim<br>
+                Ne zaman oradan öpsem,<br>
+                Değişir gözlerinin rengi<br>
+                Yanar dudakların, terler avuçların<br>
+                Dökülür kapkara aydınlık gibi<br>
+                Omuzlarına saçların<br>
+                Gitgide artar kalbinin vuruşları<br>
+                Bir musiki halinde dünyamı doldurur<br>
+                Ansızın bütün sesler kesilir<br>
+                Zaman durur<br>
+                Bir baş dönmesi başlar o en yükseklerde<br>
+                Her gün seninle yeniden var oluruz<br>
+                Eriyip kaybolduğumuz yerde...<br><br>
+                Sesini duymadığım gün<br>
+                Yaşanmış değil<br>
+                Açan çiçek değil<br>
+                Öten kuş değil<br>
+                Yüzünü görmediğim gün<br>
+                İçimde yıldızlar sönük<br>
+                Güneşler güneş değil<br>
+                Seni sevmediğim gün<br>
+                Seni anmadığım gün<br>
+                Olacak iş değil...<br><br>
+                Her günüm seninle geçsin<br>
+                O güneşe en yakın<br>
+                Kimsenin varamayacağı bir dağ başında<br>
+                Uçsuz bucaksız uzak denizlerde<br>
+                İnsan ayağı değmemiş ormanlarda<br>
+                Uzaklarda, en uzaklarda<br>
+                O gemilerin uğramadığı limanlarda<br>
+                Işığım ol, alınyazım ol benim<br>
+                Vatanım ol, evim ol<br>
+                Yeter ki bir ömür boyu benim ol<br>
+                Her günüm seninle geçsin...
+            </div>
+        </div>
+    </div>
+
+    <!-- Cyrano de Bergerac Modal -->
+    <div class="modal" id="modal-cyrano">
+        <div class="modal-content">
+            <button class="modal-close" data-close="true">✕</button>
+            <h3>Cyrano de Bergerac - Edmond Rostand</h3>
+            <div class="quote-info">
+                <h4>Oyun Bilgileri</h4>
+                <p><strong>Yazar:</strong> Edmond Rostand</p>
+                <p><strong>İlk Sahneleniş:</strong> 1897</p>
+                <p><strong>Tür:</strong> Romantik Komedi</p>
+            </div>
+            <div class="quote-text">
+                Ne yapmak gerek peki?<br>
+                Sağlam bir arka mı bulmalıyım?<br>
+                Onu mu bellemeliyim?<br>
+                Bir ağaç gövdesine dolanan sarmaşık gibi<br>
+                Önünde eğilerek efendimiz sanmak mı?<br>
+                Bilek gücü yerine dolanla tırmanmak mı?<br>
+                İstemem!<br><br>
+                Herkesin yaptığı şeyleri mi yapmalıyım Le Bret?<br>
+                Sonradan görmelere övgüler mi yazmalıyım?<br>
+                Bir bakanın yüzünü güldürmek için biraz şaklabanlık edip,<br>
+                Taklalar mı atmalıyım?<br>
+                İstemem! Eksik olsun!<br><br>
+                Her sabah kahvaltıda kurbağa mı yemeli?<br>
+                Sabah akşam dolaşıp pabuç mu eskitmeli?<br>
+                Onun bunun önünde hep boyun mu eğmeli?<br>
+                İstemem! Eksik olsun böyle bir şöhret!<br>
+                Eksik olsun!<br><br>
+                Ciğeri beş para etmezlere mi "yetenekli" demeli?<br>
+                Eleştiriden mi çekinmeli?<br>
+                "Adım Mercuré dergisinde geçse" diye mi sayıklamalı?<br>
+                İstemem!<br>
+                İstemem! Eksik olsun!<br><br>
+                Korkmak, tükenmek, bitmek…<br>
+                Şiir yazacak yerde eşe dosta gitmek.<br>
+                Dilekçeler yazarak içini ortaya dökmek?<br>
+                İstemem! Eksik olsun!<br>
+                İstemem! Eksik olsun!<br><br>
+                Ama şarkı söylemek, düşlemek, gülmek, yürümek…<br>
+                Tek başına.<br>
+                Özgür olmak.<br>
+                Dünyaya kendi gözlerinle bakmak.<br>
+                Sesini çınlatmak, aklına esince şapkanı yan yatırmak.<br>
+                Bir hiç uğruna kılıcına ya da kalemine sarılmak.<br>
+                Ne ün peşinde olmak, para pul düşünmek,<br>
+                İsteyince Ay'a bile gidebilmek.<br>
+                Başarıyı alnının teriyle elde edebilmek.<br><br>
+                Demek istediğim asalak bir sarmaşık olma sakın.<br>
+                Varsın boyun olmasın bir söğütünki kadar.<br>
+                Yaprakların bulutlara erişmezse bir zararın mı var?
+            </div>
+        </div>
+    </div>
+
+    <!-- Romeo ve Juliet Modal -->
+    <div class="modal" id="modal-romeo">
+        <div class="modal-content">
+            <button class="modal-close" data-close="true">✕</button>
+            <h3>Romeo ve Juliet - William Shakespeare</h3>
+            <div class="quote-info">
+                <h4>Oyun Bilgileri</h4>
+                <p><strong>Yazar:</strong> William Shakespeare</p>
+                <p><strong>Yazılış:</strong> 1595-1596</p>
+                <p><strong>Tür:</strong> Trajedi</p>
+            </div>
+            <div class="quote-text">
+                Yarayla alay eder, yaralanmamış olan.<br><br>
+                A Dur, şu pencereden süzülen ışık da ne?<br>
+                Evet, orası doğru, Juliet de Güneş!<br>
+                Yüksel ey güzel güneş, öldür şu kıskanç Ay'ı,<br>
+                Bak nasıl da sararıp soluvermiş<br>
+                Tanrıça kederden<br>
+                Sen ondan daha güzelsin diye.<br><br>
+                Kıskandığı için vazgeç ona bağlılıktan,<br>
+                Sayrılı ve toydur bakirelik glysisi.<br>
+                Soytarılar glyer bunu ancak<br>
+                Sen çıkar bu glysileri, at üzerinden.<br><br>
+                Kadınım benim, ah benim sevgilim bu!<br>
+                Ne olur ah, bilseydin sevgilim olduğunu!<br><br>
+                Konuşuyor, ama bir şey de demiyor,<br>
+                Ne çıkar, anlatıyor ya gözleriyle<br>
+                Karşılık vereceğim ben de!<br><br>
+                Amma da yüzsüzüm, konuştuğu ben değilim ki!<br>
+                Tüm göklerin en güzel yıldızlarından İkisi,<br>
+                Yalvarıyorlar onun gözlerine işleri olduğundan:<br>
+                Biz dönünceye dek siz parıldayın diye.<br><br>
+                Gözleri gökte olsaydı, yıldızlar da onun yüzünde,<br>
+                Utandırırdı yıldızları yanaklarının parlaklığı,<br>
+                Gün ışığının kandili utandırdığı gibi tıpkı.<br><br>
+                Öyle parlak bir ışık ağlayanı olurdu ki gözleri gökte,<br>
+                Gece bitti sanarak kuşlar cıvıldaşırdı.<br>
+                Bak, nasıl da dayamış yanağını eline!<br>
+                Ah, eline giydiği eldiven olaydım da<br>
+                Dokunaydım yanağına.<br><br>
+                Konuşuyor. Ey parlak melek, konuş yine!<br>
+                Sen, göz kamaştıran bir parlaklık veriyorsun geceye;<br>
+                Cennetin kanatlı ulağısın başımın üstünde,<br>
+                Tıpkı ölümlülerin hayretle açılan gözlerine gördüğün gibi.<br><br>
+                Tembel bulutlara binip uçarken o havanın kucağında,<br>
+                Onu seyreden insanlar gibi hayranlıkla,<br>
+                Öylece bakıyorum ben sana.
+            </div>
+        </div>
+    </div>
+
+    <!-- As You Like It Modal -->
+    <div class="modal" id="modal-world">
+        <div class="modal-content">
+            <button class="modal-close" data-close="true">✕</button>
+            <h3>As You Like It - William Shakespeare</h3>
+            <div class="quote-info">
+                <h4>Oyun Bilgileri</h4>
+                <p><strong>Yazar:</strong> William Shakespeare</p>
+                <p><strong>Yazılış:</strong> 1599-1600</p>
+                <p><strong>Tür:</strong> Komedi</p>
+            </div>
+            <div class="quote-text">
+                Bütün dünya bir sahnedir...<br>
+                Ve bütün erkekler ve kadınlar<br>
+                sadece birer oyuncu...<br>
+                Girerler ve çıkarlar.<br>
+                Bir kişi bir çok rolü birden oynar,<br>
+                Bu oyun insanın yedi çağıdır...<br><br>
+                İlk rol bebeklik çağıdır,<br>
+                Dadısının kollarında agucuk yaparken...<br>
+                sonra mızıkçı bir okul çocuğu...<br>
+                Çantası elinde, yüzünde sabahın parlaklığı<br>
+                Ayağını sürerek okula gider...<br><br>
+                Daha sonra aşık delikanlı gelir,<br>
+                İç çekişleri ve sevgilinin kaşlarına yazılmış şirleriyle...<br>
+                Sonra asker olur, garip yeminler eder.<br>
+                Leopara benzeyen sakalıyla onurlu ve kıskanç,<br>
+                Savaşta atak ve korkusuz,<br>
+                Topun ağzında bile şöhretin hayallerini kurar...<br><br>
+                Sonra hakimliğe başlar,<br>
+                Şişman göbeği lezzetli etlerle dolu,<br>
+                Gözleri ciddi, sakalı ciddi kesmli...<br>
+                Bilge atasözleri ve modern örneklerle konuşur<br>
+                Ve böylece rolünü oynar...<br><br>
+                Altıncı çağında ise palyaço giysileriyle,<br>
+                Gözünde gözlüğü, yanında çantası,<br>
+                Gençliğinden kalma pantalonu zayıflamış vücuduna bol gelir.<br>
+                Ve kalın erkek sesi, çocukluğundaki gibi incelir.<br><br>
+                Son çağda bu olaylı tarih sona erer.<br>
+                İkinci çocukla her şey biter.<br>
+                Dişsiz, gözsüz, tatsız, hiç bir şeysiz..
+            </div>
+        </div>
+    </div>
+
+    <!-- Anonim Şiir Modal -->
+    <div class="modal" id="modal-anonim">
+        <div class="modal-content">
+            <button class="modal-close" data-close="true">✕</button>
+            <h3>Anonim Şiir</h3>
+            <div class="quote-info">
+                <h4>Şiir Bilgileri</h4>
+                <p><strong>Yazar:</strong> Anonim</p>
+                <p><strong>Kaynak:</strong> İnternet</p>
+                <p><strong>Not:</strong> Victor Hugo'ya atfedilse de kaynak belirsiz</p>
+            </div>
+            <div class="quote-text">
+                ağlamak için gözden yas mi akmali?<br>
+                dudaklar gülerken, insan aglayamaz mi?<br>
+                sevmek için güzele mi bakmali?<br>
+                çirkin bir tende güzel bir ruh, kalbi baglayamaz mi?<br><br>
+                hasret; özlenenden uzak mi kalmaktir?<br>
+                özlenen yakindayken hicran duyulamaz mi?<br>
+                hirsizlik; para, malmi çalmaktir?<br>
+                saadet çalmak, hirsizlik olamaz mi?<br><br>
+                solmasi için gülü dalindan mi koparmali?<br>
+                pembe bir gonca iken gül dalinda solmaz mi?<br>
+                öldürmek için silah, hançer mi olmali?<br>
+                saçlar bag, gözler silah, gülüs, kursun olamaz mi?
+            </div>
+        </div>
+    </div>
+
+    
+    <!-- Camus Modal -->
+    <div class="modal" id="modal-camus1">
+        <div class="modal-content">
+            <button class="modal-close" data-close="true">✕</button>
+            <h3>Sisifos Söyleni - Albert Camus</h3>
+            <div class="quote-info">
+                <h4>Eser Bilgileri</h4>
+                <p><strong>Yazar:</strong> Albert Camus</p>
+                <p><strong>Kitap:</strong> Sisifos Söyleni</p>
+                <p><strong>Yıl:</strong> 1942</p>
+            </div>
+            <div class="quote-text">
+                Gerçekten ciddi olan tek felsefi problem vardır: intihar. Hayatın değip değmeyeceğini sorgulamak, insanın varoluşuna dair en temel sorudur. Ama intihar, soruna çözüm değildir; sadece onu yok saymaktır. Asıl mesele, anlamsızlığı kabul edip yaşamaya devam etmektir. İnsan, tüm saçmalığıyla var olan dünyaya karşı başkaldırmalıdır.<br><br>
+                İnsan anlam arar, evren ise sessizdir. Bilinç, bazen bu sessizlik içinde bir lanet gibi gelir. İnsan, anlamsızlığın farkına varınca, ya kaçacak ya da hayatın saçmalığına rağmen yaşamaya devam edecektir.<br><br>
+                Güneş o kadar parlaktı ki, başımı kaldırmakta zorlandım. Ölümü düşünmemin bir anlamı yoktu; çünkü hayat bir yığın rastgele olaydan ibaretti. İnsan, yalnızdır. Kimse onun yerine yaşamaz, kimse onun acısını paylaşmaz. Ve işte bu yalnızlık, insanın absürdü fark ettiği andır.
+            </div>
+        </div>
+    </div>
+
+    <!-- Sylvia Plath Modal -->
+    <div class="modal" id="modal-plath">
+        <div class="modal-content">
+            <button class="modal-close" data-close="true">✕</button>
+            <h3>Çan Fanusı - Sylvia Plath</h3>
+            <div class="quote-info">
+                <h4>Eser Bilgileri</h4>
+                <p><strong>Yazar:</strong> Sylvia Plath</p>
+                <p><strong>Kitap:</strong> Çan Fanusı (The Bell Jar)</p>
+                <p><strong>Yıl:</strong> 1963</p>
+            </div>
+            <div class="quote-text">
+                Yaşamımın, öyküdeki yeşil incir ağacı gibi önümde dallanıp budaklandığını görüyordum. Her dalın ucunda tombul, mor bir incir gibi eşsiz bir gelecek beni çağırıyor, göz kırpıyordu. İncirlerden biri, bir eş, mutlu bir yuva ve çocuklardı. Bir başkası, ünlü bir ozan, öteki parlak bir profesör, biri şaşırtıcı editör Ee Gee, öbürü Avrupa, Afrika ve Güney Amerika, biri Constantin, Sokrates, Attila ve garip adları değişik meslekleri olan daha bir yığın aşık, bir başkasıysa Olimpiyat takım şampiyonu bir kadındı. Bu incirlerin üzerinde ve ötesinde, ne olduklarını pek çıkaramadığım daha bir sürü incir daha vardı.<br><br>
+                Kendimi dalların çatallandığı noktada otururken görüyordum.<br><br>
+                Ve incirlerden hangisini seçeceğime bir türlü karar veremediğim için açlıktan ölüyordum. Hepsini ayrı ayrı istiyordum incirlerin, ama birini seçmek ötekilerin hepsini kaybetmek demekti. Ve ben orada karar veremeden otururken incirler buruşup kararmaya başlıyor ve birer birer toprağa, ayaklarımın dibine düşüyorlardı.
+            </div>
+        </div>
+    </div>
+
+    <!-- Nietzsche Modal -->
+    <div class="modal" id="modal-nietzsche">
+        <div class="modal-content">
+            <button class="modal-close" data-close="true">✕</button>
+            <h3>Neşeli Bilim - Friedrich Nietzsche</h3>
+            <div class="quote-info">
+                <h4>Eser Bilgileri</h4>
+                <p><strong>Yazar:</strong> Friedrich Nietzsche</p>
+                <p><strong>Kitap:</strong> Neşeli Bilim (Die fröhliche Wissenschaft)</p>
+                <p><strong>Yıl:</strong> 1882</p>
+            </div>
+            <div class="quote-text">
+                "Tanrı öldü ve onu biz öldürdük. Bu ölümün yükünü kim omuzlayacak? Biz, katillerin katiliyiz. Dünyayı eski anlamından mahrum bıraktık. Artık yönümüz yok, yukarı yok, aşağı yok. Yeni değerleri biz yaratmazsak, bu boşlukta yok olacağız. İnsanın en büyük sınavı budur: anlamı kendi eliyle icat etmek."
+            </div>
+        </div>
+    </div>
+
+    <!-- Sartre Modal -->
+    <div class="modal" id="modal-sartre">
+        <div class="modal-content">
+            <button class="modal-close" data-close="true">✕</button>
+            <h3>Bulantı - Jean-Paul Sartre</h3>
+            <div class="quote-info">
+                <h4>Eser Bilgileri</h4>
+                <p><strong>Yazar:</strong> Jean-Paul Sartre</p>
+                <p><strong>Kitap:</strong> Bulantı (La Nausée)</p>
+                <p><strong>Yıl:</strong> 1938</p>
+            </div>
+            <div class="quote-text">
+                "Birdenbire varlığın ağırlığını hissettim. Her şey bir fazlalık, bir gereksizlik gibi görünüyordu. Ben de dâhil. Dünya, kendini açıklamaz; neden var olduğunu söylemez. Ben ise varlığımın sebebini ararken bulantı duydum. O anda anladım ki, varoluş bir özle başlamaz; insan önce vardır, sonra kendine bir öz yaratır."
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Modal functionality
+        document.addEventListener('DOMContentLoaded', function() {
+            const modalTriggers = document.querySelectorAll('[data-modal-target]');
+            const modals = document.querySelectorAll('.modal');
+            const modalOverlay = document.getElementById('modal-overlay');
+            const closeButtons = document.querySelectorAll('[data-close="true"]');
+
+            // Open modal
+            modalTriggers.forEach(trigger => {
+                trigger.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    const targetModal = document.querySelector(this.getAttribute('data-modal-target'));
+                    if (targetModal) {
+                        targetModal.style.display = 'flex';
+                        modalOverlay.style.display = 'block';
+                        document.body.style.overflow = 'hidden';
+                    }
+                });
+            });
+
+            // Close modal
+            function closeModal(modal) {
+                modal.style.display = 'none';
+                modalOverlay.style.display = 'none';
+                document.body.style.overflow = 'auto';
+            }
+
+            // Close buttons
+            closeButtons.forEach(button => {
+                button.addEventListener('click', function() {
+                    const modal = this.closest('.modal');
+                    closeModal(modal);
+                });
+            });
+
+            // Close on overlay click
+            modalOverlay.addEventListener('click', function() {
+                modals.forEach(modal => {
+                    if (modal.style.display !== 'none') {
+                        closeModal(modal);
+                    }
+                });
+            });
+
+            // Close on escape key
+            document.addEventListener('keydown', function(e) {
+                if (e.key === 'Escape') {
+                    modals.forEach(modal => {
+                        if (modal.style.display !== 'none') {
+                            closeModal(modal);
+                        }
+                    });
+                }
+            });
+
+            // Mobile navigation toggle
+            const navToggle = document.querySelector('.nav-toggle');
+            const navList = document.querySelector('.nav-list');
+
+            if (navToggle && navList) {
+                navToggle.addEventListener('click', function() {
+                    navList.classList.toggle('show');
+                    const isExpanded = navList.classList.contains('show');
+                    this.setAttribute('aria-expanded', isExpanded);
+                });
+
+                // Close mobile menu when clicking on a link
+                const navLinks = document.querySelectorAll('.nav-list a');
+                navLinks.forEach(link => {
+                    link.addEventListener('click', function() {
+                        navList.classList.remove('show');
+                        navToggle.setAttribute('aria-expanded', 'false');
+                    });
+                });
+            }
+
+            // Smooth scrolling for navigation links
+            const navLinks = document.querySelectorAll('a[href^="#"]');
+            navLinks.forEach(link => {
+                link.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    const targetId = this.getAttribute('href');
+                    const targetElement = document.querySelector(targetId);
+                    if (targetElement) {
+                        targetElement.scrollIntoView({
+                            behavior: 'smooth',
+                            block: 'start'
+                        });
+                    }
+                });
+            });
+        });
+    </script>
+
+</body>
+</html>
